@@ -1,7 +1,7 @@
 # Default values for cell-poc.
-# Overridden per-cell via Harness pipeline variable <+pipeline.variables.cell_name>
+# Cell identity is derived from .Release.Name (set per-stage by Harness).
+# These values intentionally do NOT include `cell` — it must come from the release name.
 
-cell: default
 image:
   repository: nginx
   tag: "1.27-alpine"

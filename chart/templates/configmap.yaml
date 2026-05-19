@@ -5,5 +5,5 @@ metadata:
   labels:
     {{- include "cell-poc.labels" . | nindent 4 }}
 data:
-  cell: {{ .Values.cell | quote }}
-  greeting: "Hello from cell {{ .Values.cell }}"
+  cell: {{ include "cell-poc.cell" . | quote }}
+  greeting: "Hello from cell {{ include "cell-poc.cell" . }}"

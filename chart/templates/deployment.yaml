@@ -9,13 +9,13 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/instance: {{ include "cell-poc.fullname" . }}
-      cell: {{ .Values.cell | quote }}
+      cell: {{ include "cell-poc.cell" . | quote }}
   template:
     metadata:
       labels:
         app.kubernetes.io/name: cell-poc
         app.kubernetes.io/instance: {{ include "cell-poc.fullname" . }}
-        cell: {{ .Values.cell | quote }}
+        cell: {{ include "cell-poc.cell" . | quote }}
     spec:
       containers:
         - name: app
@@ -26,6 +26,6 @@ spec:
               containerPort: 80
           env:
             - name: CELL
-              value: {{ .Values.cell | quote }}
+              value: {{ include "cell-poc.cell" . | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

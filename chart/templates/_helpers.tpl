@@ -1,10 +1,23 @@
-{{/* Generate base name suffixed by cell so each cell gets unique k8s object names */}}
+{{/*
+  Cell identity is taken directly from the Helm release name set by Harness.
+  Each Harness stage overrides the infra's releaseName, so .Release.Name differs per cell:
+    Cell Default -> release-default
+    Cell X       -> release-cell-x
+    Cell 0       -> release-cell-0
+  No per-stage Helm values override is needed.
+*/}}
+
 {{- define "cell-poc.fullname" -}}
-{{- printf "cell-poc-%s" .Values.cell | trunc 63 | trimSuffix "-" -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "cell-poc.cell" -}}
+{{- /* Strip the leading "release-" prefix to get the cell name */ -}}
+{{- .Release.Name | trimPrefix "release-" -}}
 {{- end -}}
 
 {{- define "cell-poc.labels" -}}
 app.kubernetes.io/name: cell-poc
 app.kubernetes.io/instance: {{ include "cell-poc.fullname" . }}
-cell: {{ .Values.cell | quote }}
+cell: {{ include "cell-poc.cell" . | quote }}
 {{- end -}}
