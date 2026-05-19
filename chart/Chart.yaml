@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cell-poc
+description: Lightweight Helm chart for Harness cell-based deployment POC
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
